@@ -19,7 +19,7 @@ import User from './users/user.entity';
         entities: [
           User
         ],
-        synchronize: true,
+        synchronize: false,
       })
     }),
   ],
