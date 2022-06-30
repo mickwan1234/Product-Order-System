@@ -10,7 +10,6 @@ export class CartController {
     constructor(private readonly cartService: CartService) { }
 
     @Get()
-    @Roles(Role.USER)
     @UseGuards(AuthGuard('jwt'))
     async getCartInfo(@Query('userId') userId: string, @Request() req) {
         
@@ -21,11 +20,10 @@ export class CartController {
     }
 
     @Post()
-    @Roles(Role.USER)
     @UseGuards(AuthGuard('jwt'))
     async setCartInfo(@Query('userId') userId: string, @Body() cart: Cart, @Request() req) {
         if (req.user.username !== userId) {
-            throw new ForbiddenException('You can not modify other people\'s cart!');
+            throw new ForbiddenException('You can not modify other user\'s cart!');
         }
         await this.cartService.setCartInfo(userId, cart);
         return "Saved cart successfully."

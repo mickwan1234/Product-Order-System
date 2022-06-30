@@ -8,6 +8,7 @@ import { DatabaseModule } from './database.module';
 import { UsersModule } from './users/users.module';
 import { ProductModule } from './product/product.module';
 import { CartModule } from './cart/cart.module';
+import { OrderModule } from './order/order.module';
 import * as redisStore from 'cache-manager-redis-store'
 
 @Module({
@@ -31,7 +32,8 @@ import * as redisStore from 'cache-manager-redis-store'
       store:redisStore,
       host: 'localhost',
       port: 6379
-    })],
+    }),
+    OrderModule],
   controllers: [AppController],
   providers: [AppService],
 })

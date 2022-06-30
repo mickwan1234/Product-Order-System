@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import User from './users/user.entity';
 import Product from './product/product.entity';
+import Order from './order/order.entity';
 
  
 @Module({
@@ -19,7 +20,8 @@ import Product from './product/product.entity';
         database: configService.get('POSTGRES_DB'),
         entities: [
           User,
-          Product
+          Product,
+          Order,
         ],
         synchronize: false,
       })
