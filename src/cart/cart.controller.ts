@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, ForbiddenException, Get, Post, Query, Request, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Roles } from 'src/auth/roles.decorator';
+import { RolesGuard } from 'src/auth/roles.guard';
 import { Role } from 'src/users/user.entity';
 import { Cart } from './cart.entity';
 import { CartService } from './cart.service';
@@ -10,7 +11,8 @@ export class CartController {
     constructor(private readonly cartService: CartService) { }
 
     @Get()
-    @UseGuards(AuthGuard('jwt'))
+    @Roles(Role.USER)
+    @UseGuards(AuthGuard('jwt'), RolesGuard)
     async getCartInfo(@Query('userId') userId: string, @Request() req) {
         
         if (userId !== req.user.username) {
@@ -20,7 +22,8 @@ export class CartController {
     }
 
     @Post()
-    @UseGuards(AuthGuard('jwt'))
+    @Roles(Role.USER)
+    @UseGuards(AuthGuard('jwt'), RolesGuard)
     async setCartInfo(@Query('userId') userId: string, @Body() cart: Cart, @Request() req) {
         if (req.user.username !== userId) {
             throw new ForbiddenException('You can not modify other user\'s cart!');
@@ -31,7 +34,7 @@ export class CartController {
 
     @Delete()
     @Roles(Role.USER)
-    @UseGuards(AuthGuard('jwt'))
+    @UseGuards(AuthGuard('jwt'),RolesGuard)
     async deleteCart(@Query('userId') userId: string, @Request() req) {
         
         if (userId !== req.user.username) {

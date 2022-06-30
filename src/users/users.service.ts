@@ -12,4 +12,8 @@ export class UsersService {
         return await this.userRepository.findOneBy({username: username});
       }
 
+      async create(user: User): Promise<User> {
+        return await this.userRepository.create(user);
+    }
+
 }

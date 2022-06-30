@@ -30,6 +30,8 @@
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/typeorm": "^8.1.4",
     "@types/hapi__joi": "^17.1.8",
+    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
     "cache-manager": "^4.0.1",
     "cache-manager-redis-store": "^2.0.0",
     "passport": "^0.6.0",
