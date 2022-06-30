@@ -6,10 +6,10 @@ import Product from './product.entity';
 @Injectable()
 export class ProductService {
     @InjectRepository(Product)
-    private productService: Repository<Product>;
+    private productRepository: Repository<Product>;
 
     async findAll(): Promise<Product[] | undefined> {
-        return await this.productService.find();
+        return await this.productRepository.find();
       }
 
 

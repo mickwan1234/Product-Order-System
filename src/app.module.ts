@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { CacheModule, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
@@ -7,6 +7,8 @@ import * as Joi from '@hapi/joi';
 import { DatabaseModule } from './database.module';
 import { UsersModule } from './users/users.module';
 import { ProductModule } from './product/product.module';
+import { CartModule } from './cart/cart.module';
+import * as redisStore from 'cache-manager-redis-store'
 
 @Module({
   imports: [
@@ -23,7 +25,13 @@ import { ProductModule } from './product/product.module';
   }),
     DatabaseModule,
     UsersModule,
-    ProductModule],
+    ProductModule,
+    CartModule,
+    CacheModule.register({
+      store:redisStore,
+      host: 'localhost',
+      port: 6379
+    })],
   controllers: [AppController],
   providers: [AppService],
 })

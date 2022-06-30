@@ -10,6 +10,9 @@ class User{
 
     @Column()
     public name:string
+
+    @Column()
+    public role:string
 }
 
 export default User
