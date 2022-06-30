@@ -1,4 +1,4 @@
-import { Body, Controller, ForbiddenException, Get, Post, Query, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, ForbiddenException, Get, Post, Query, Request, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Roles } from 'src/auth/roles.decorator';
 import { Role } from 'src/users/user.entity';
@@ -29,6 +29,19 @@ export class CartController {
         }
         await this.cartService.setCartInfo(userId, cart);
         return "Saved cart successfully."
+    }
+
+    @Delete()
+    @Roles(Role.USER)
+    @UseGuards(AuthGuard('jwt'))
+    async deleteCart(@Query('userId') userId: string, @Request() req) {
+        
+        if (userId !== req.user.username) {
+            throw new ForbiddenException('You can not delete someone else cart.');
+        }
+        await this.cartService.deleteUserCart(userId);
+
+        return "Delete cart successfully.";
     }
 
 }

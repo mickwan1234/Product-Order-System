@@ -45,4 +45,9 @@ export class CartService {
         }
         return cart;
     }
+
+    async deleteUserCart(userId: string) {
+        const key = `cart-${userId}`;
+        await this.cacheManager.del(key);
+    }
 }
